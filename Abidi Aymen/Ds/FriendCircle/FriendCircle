@@ -1,0 +1,76 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+class disjointSetsVector{
+    public:
+    vector<int> parent;
+    vector<int> sz;
+    int nbrSets;
+public:
+     disjointSetsVector(int n){
+        parent.reserve(2*n);
+        sz.reserve(2*n);
+        for(int i=0;i<2*n;++i){
+            parent[i] = i;
+            sz[i] = 1;
+        }
+    }
+
+};
+
+
+int main()
+{
+  int t, n ,taille ,total ;
+   taille = -1 ;
+   vector <string> name ;
+   pair<string,string> s ;
+   cin >> t ;
+   while(t--){
+      cin >> n ;
+      name.resize(2*n);
+      disjointSetsVector Ds(2* n);
+      while(n--){
+            cin >>s.first>> s.second ;
+            total = 0 ;
+
+            auto p1 = find (name.begin(),name.end(),s.first) ;
+            auto p2 = find(name.begin(),name.end(),s.second) ;
+            cout << p1 - name.begin()-1 << p2 - name.begin()-1 << endl;
+            if ((p1== name.end())&&(p2== name.end())){
+                name.push_back(s.first);
+                name.push_back(s.second);
+
+                Ds.parent[taille+1] = taille+2 ;
+                Ds.sz[taille+2]+= 1 ;
+                taille += 2 ;
+                total = 2 ;
+            }
+            else{
+                if (p1== name.end()){
+                   name.push_back(s.first);
+                   Ds.parent[p2-name.begin()] = taille+1 ;
+
+                   Ds.sz[p2-name.begin()+1]+= Ds.sz[p1-name.begin()] ;
+                   total = Ds.sz[p2-name.begin()+1];
+                   taille+= 1 ;
+                }
+                else {
+                   name.push_back(s.second);
+                   Ds.parent[p1-name.begin()] = taille+1 ;
+                   Ds.sz[p1-name.begin()+1]+= Ds.sz[p1-name.begin()] ;
+                   total = Ds.sz[p1-name.begin()+1];
+                   taille+= 1 ;
+
+                }
+            }
+
+
+           cout << total<<endl;
+
+
+      }
+  }
+
+    return 0;
+}
