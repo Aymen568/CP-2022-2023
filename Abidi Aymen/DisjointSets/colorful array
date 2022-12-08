@@ -1,0 +1,45 @@
+#include <iostream>
+#include<tuple>
+#include<vector>
+
+using namespace std;
+typedef long long ll ;
+class DisjointSets{
+
+public:
+    vector<vector<ll>> parents;
+public :
+    DisjointSets (int n ){
+        parents.resize(n);
+    }
+};
+
+int main()
+{   int n , q ;
+    cin >> n >> q;
+    int z =q ;
+
+    vector<tuple<int,int,ll>> sug ;
+    int a , b ;
+    ll c ;
+    while (z--){
+        cin >> a>>b>> c ;
+        sug.push_back(make_tuple(a,b,c));
+    }
+    for(int i=1;i<=n;++i){
+        int fin = q ;
+        while (true){
+           a = get<0> (sug[fin-1]) ;
+           b= get<1> (sug[fin-1]);
+           if ((i>= a)&&(i<=b)){c= get<2>(sug[fin-1]);
+           break;}
+           else {fin--;}
+
+        }
+        cout << c <<endl ;
+    }
+
+
+
+    return 0;
+}
